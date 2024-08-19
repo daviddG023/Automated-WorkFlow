@@ -51,7 +51,7 @@ const generateExcel = (data, colorMap, flag) => {
         const blob = new Blob([buffer], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         });
-        saveAs(blob, 'colored-tasks.xlsx');
+        saveAs(blob, 'task.xlsx');
     });
 };
 
