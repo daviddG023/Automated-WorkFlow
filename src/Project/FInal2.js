@@ -326,66 +326,63 @@ function WorkFlowComponent(props) {
         setTasksByDay(tasksByDay);
     }, [arrayData]);
 
-    return (
-        <div>
+    return ( <>
+            <div className='m-4 '>
             <Logo />
-            <h2 style={{ marginLeft: '1.4%' }}>Upload CSV File</h2>
-            <label style={{
-                    position: 'absolute',
-                    top: '19%',
-                    right: '15%',
-                    padding: '10px 20px',
-                    fontSize: '25px',
-                    boxSizing: 'border-box',
-                    borderRadius: '5px',
-                }}>Sprint Days:</label>
-            <input
+            <h2>Upload CSV File</h2>
+            <div className='text-end'>
+                <label className='' style={{fontSize:'20px'}}>Sprint Days:</label>
+                <input 
                 type="number"
                 value={SprintDays}
                 onChange={handleChange}
-                style={{
-                    position: 'absolute',
-                    top: '20%',
-                    right: '1.4%',
-                    padding: '10px 20px',
-                    fontSize: '16px',
-                    boxSizing: 'border-box',
-                    borderRadius: '5px',
-                }}
-            />
-            <input
-                type="file"
-                accept=".csv"
-                onChange={handleFileUpload}
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-            />
-            <button
-                style={{ marginLeft: '1.4%' }}
-                onClick={() => fileInputRef.current && fileInputRef.current.click()} 
-                className="custom-file-upload"
-            >
-                {selectedFileName || "Choose File"}
-            </button>
-            
-            <input
-                type="file"
-                accept=".csv"
-                onChange={handleFileUpload2}
-                ref={fileInputRef2}
-                style={{ display: 'none' }} // Hide the default file input
-            />
+                />    
+            </div>
 
-            <button 
-                style={{ marginLeft: '1.4%' }}
-                onClick={() => fileInputRef2.current && fileInputRef2.current.click()} 
-                className="custom-file-upload"
-            >
-                {selectedFileName2 || "Choose Resourses"}
-            </button>
+            <div className="d-flex justify-content-between my-2">
+                <div className="">
 
-            <button onClick={handleReset} style={{ marginTop: '13%', marginRight: '0.7%'}} className="reset-button">Reset</button> 
+                    <div className='row ' style={{ gap: '5px', flexWrap: 'wrap', marginLeft:'-2px'}}>
+                        < input
+                            type="file"
+                            accept=".csv"
+                            onChange={handleFileUpload}
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                        />
+                        <button
+                            onClick={() => fileInputRef.current && fileInputRef.current.click()} 
+                            className="col-12 col-sm-4 custom-file-upload"
+                        >
+                            {selectedFileName || "Choose File"}
+                        </button>
+                        
+                        <input
+                            type="file"
+                            accept=".csv"
+                            onChange={handleFileUpload2}
+                            ref={fileInputRef2}
+                            style={{ display: 'none' }} // Hide the default file input
+                        />
 
+                        <button 
+                            onClick={()=> fileInputRef2.current && fileInputRef2.current.click()} 
+                            className="col-12 col-sm-4 custom-file-upload"
+                        >
+                            {selectedFileName2 || "Choose Resourses"}
+                        </button>
+
+                    </div>
+                </div>
+                <div className="">
+                <button onClick={handleReset} className="col-12 col-sm-4 custom-file-upload reset-button" >Reset</button> 
+
+                </div>
+            </div>
+
+
+        </div>
+        <div className="table-container">
             <div className="table-container">
                 <table>
                 <thead>
@@ -443,7 +440,7 @@ function WorkFlowComponent(props) {
                                 previousColumnsRef.current = currentColumns;
                                 renderedColumnsRef.current.push({ ...currentColumns, day }); // Store the current columns
                                 if(dayValue < SprintDays+1){return (
-                                    <tr key={index}>
+                                    <tr className='table-container' key={index}>
                                         <td>{day}</td>
                                         <td>{currentColumns.BE}</td>
                                         <td>{currentColumns.Android1}</td>
@@ -455,22 +452,10 @@ function WorkFlowComponent(props) {
                                         <td>{currentColumns.QC3}</td>
                                     </tr>
                                 );}
-                                // return (
-                                //     <tr key={index}>
-                                //         <td>{day}</td>
-                                //         <td>{currentColumns.BE}</td>
-                                //         <td>{currentColumns.Android1}</td>
-                                //         <td>{currentColumns.Android2}</td>
-                                //         <td>{currentColumns.iOS1 || currentColumns.Android1}</td>
-                                //         <td>{currentColumns.iOS2 || currentColumns.Android2}</td>
-                                //         <td>{currentColumns.QC1}</td>
-                                //         <td>{currentColumns.QC2}</td>
-                                //         <td>{currentColumns.QC3}</td>
-                                //     </tr>
-                                // );
                             })}
                     </tbody>
                 </table>
+            </div>
                 <button 
                     className="download-button"
                     onClick={() => {
@@ -478,11 +463,14 @@ function WorkFlowComponent(props) {
                         //downloadCSV(csvContent, "tasks.csv");
                         processCSVAndGenerateExcel(csvContent,flag);
                     }}
-                    disabled={logMessages.length === 0}>
+                    disabled={logMessages.length === 0}
+                    style={{width:'100%'}}>
                     Download
                 </button>
-            </div>
-        </div>
+        </div>        
+
+    </>
+
     );
 }
 export default WorkFlowComponent;

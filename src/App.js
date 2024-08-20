@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import './Project/Signup.css';
+// import './Project/Signup.css';
 import Final2 from './Project/FInal2';
 
 
