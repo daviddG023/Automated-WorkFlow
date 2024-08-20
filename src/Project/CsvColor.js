@@ -47,6 +47,16 @@ const generateExcel = (data, colorMap, flag) => {
         });
     });
 
+    // Auto-fit columns based on the content
+    worksheet.columns.forEach(column => {
+        let maxLength = 0;
+        column.eachCell({ includeEmpty: true }, cell => {
+            const cellValue = cell.value ? cell.value.toString() : '';
+            maxLength = Math.max(maxLength, cellValue.length);
+        });
+        column.width = maxLength + 2; // Adjust to your preference
+    });
+
     workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -54,6 +64,7 @@ const generateExcel = (data, colorMap, flag) => {
         saveAs(blob, 'task.xlsx');
     });
 };
+
 
 
 export function processCSVAndGenerateExcel(csvString, flag) {
